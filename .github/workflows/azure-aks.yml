@@ -1,11 +1,9 @@
 name: build and deploy claims-app to AKS
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   ACR_RG: poc-rg
