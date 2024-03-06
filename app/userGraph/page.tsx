@@ -1,11 +1,20 @@
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import Topbar from '../components/topbar';
+import { User } from '../interfaces/User';
 
-let display: string[] = [];
 let firstName: string;
 let lastName: string;
 let id: string;
+
+let user: User = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  id: '',
+  status: 0,
+
+};
 
 export default async function graphPage() {
   async function getUserProfileByEmail(formData: FormData) {
@@ -32,15 +41,15 @@ export default async function graphPage() {
 
     if (response.ok) {
       const data = await response.json();
-      formData.set('firstName', data.givenName);
-      formData.set('lastName', data.surname);
 
-      firstName = data.givenName;
-      console.log('firstName >>>> ', firstName);
-      lastName = data.surname;
-      console.log('lastName >>>> ', lastName);
-      id = data.id;
-      console.log('id >>>> ', id);
+      user = {
+        firstName: data.givenName,
+        lastName: data.surname,
+        email: data.userPrincipalName,
+        id: data.id,
+        status: data.status,
+      };
+
     } 
 
     revalidatePath('/userGraph');
@@ -70,7 +79,7 @@ export default async function graphPage() {
               id='firstName'
               type="text"
               name='firstName'
-              value={firstName}
+              defaultValue={user.firstName}
               style={{ width: '100%' }}
               
             />
@@ -84,7 +93,7 @@ export default async function graphPage() {
               className=" bg-slate-400 text-black"
               type="text"
               name="lastName"
-              value={lastName}
+              defaultValue={user.lastName}
               style={{ width: '100%' }}
             />
           </label>
