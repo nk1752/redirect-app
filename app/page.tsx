@@ -7,7 +7,6 @@ import Image from "next/image";
 import CurrentUser from "./components/currentUser";
 import Signout from "./components/signout";
 import Topbar from "./components/topbar";
-import getUserProfile from './userGraph/lib/getUserProfile';
 
 export default function Home() {
 
@@ -17,16 +16,21 @@ export default function Home() {
   const [accessToken, setAccessToken] = useState('');
   const [principalEmail, setPrincipalEmail] = useState('');
 
- 
+ // use effect to get the current user
+  useEffect(() => {
     if (accounts.length > 0) {
       
-      const result = getUserProfile();
-      console.log('result >>>> ', result);
+      const name = accounts[0].name;
+      const email = accounts[0].username;
+
+      if (name) {
+
+        setCurrentUser(name);
+        setPrincipalEmail(email);
+      }
      
     }
-    else {
-      console.log('no accounts signed in');
-    }
+  }, [accounts, inProgress, instance]);
 
   return (
     <main className="flex flex-col">
