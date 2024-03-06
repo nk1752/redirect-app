@@ -1,0 +1,51 @@
+name: build and deploy claims-app to AKS
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  ACR_RG: poc-rg
+  ACR: vhacr
+  AKS_RG: poc-rg
+  AKS_NAME: claims
+  CONTAINER_TAG: {{ steps.get_tag.outputs.tag }}
+  DEPLOY_NS: claims-ns
+
+jobs:
+
+  # variables to be used in the build job
+  github_variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the tag
+        id: get_tag
+        run: echo ::set-output name=tag::$(echo $GITHUB_REF | cut -d'/' -f 3)
+      - name: github.sha
+        run: echo "GITHUB_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+      - name: github.repository
+        run: echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}" >> $GITHUB_ENV
+
+  # build job
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+      
