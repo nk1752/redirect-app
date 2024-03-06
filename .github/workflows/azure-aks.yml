@@ -12,7 +12,7 @@ env:
   ACR: vhacr
   AKS_RG: poc-rg
   AKS_NAME: claims
-  CONTAINER_TAG: {{ steps.get_tag.outputs.tag }}
+  CONTAINER_TAG: ${{ github.sha }}
   DEPLOY_NS: claims-ns
 
 jobs:
