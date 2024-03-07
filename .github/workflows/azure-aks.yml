@@ -17,16 +17,11 @@ jobs:
 
   # variables to be used in the build job
   github_variables:
-    runs-on: ubuntu-latest
-    steps:
-      - name: github.sha
-        run: echo `github SHA -> ${{ github.sha }}`
-      - name: github.repository
-        run: echo `GITHUB_REPOSITORY= ${{ github.repository }}`
-      - name: github.run_number
-        run: echo `run number -> ${{ github.run_number }}`
-      - name: github.run_id
-        run: echo `run id -> ${{ github.run_id }}`
+    
+    uses: nk1752/redirect-app/.github/workflows/variables.yml@main
+    with:
+      username: 'nadeem khalid'
+      
 
   # build job
   build:
