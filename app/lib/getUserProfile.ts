@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { User } from '../../interfaces/User';
+import { User } from '../interfaces/User';
 
 export default async function getUserProfile() {
   const url = 'https://graph.microsoft.com/v1.0/me/';

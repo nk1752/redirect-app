@@ -11,7 +11,6 @@ export default function CurrentUser() {
 
   // get current user
   useEffect(() => {
-    //console.log('from useEffect accounts: ', accounts);
 
     // USe Graph to get me
 
@@ -32,8 +31,6 @@ export default function CurrentUser() {
           const idToken = response.idToken;
           // add access token to cookies
           setAccessToken(accessToken);
-
-          
         })
         .catch((error) => {
           console.log('currentUser useEffect error: ', error);

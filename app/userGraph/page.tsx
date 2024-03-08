@@ -13,7 +13,6 @@ let user: User = {
   email: '',
   id: '',
   status: 0,
-
 };
 
 export default async function graphPage() {
@@ -22,7 +21,8 @@ export default async function graphPage() {
     const input = formData.get('email') as string;
     //console.log('email >>>> ', input);
 
-    const url = 'https://graph.microsoft.com/v1.0/users/' + input + '@pocvivahealth.com';
+    const url =
+      'https://graph.microsoft.com/v1.0/users/' + input + '@pocvivahealth.com';
     //const url = 'https://graph.microsoft.com/v1.0/users/';
 
     const accessTokenCookie = cookies().get('accessToken');
@@ -49,20 +49,17 @@ export default async function graphPage() {
         id: data.id,
         status: data.status,
       };
-
-    } 
+      console.log('user >>>> ', user);
+    }
 
     revalidatePath('/userGraph');
-    
-    
   }
 
   return (
     <main className=" flex flex-col  text-blue-700">
       <Topbar />
-      
+
       <div className=" flex flex-col gap-10 items-center content-center justify-center ">
-        
         {/* email */}
         <form
           action={getUserProfileByEmail}
@@ -76,12 +73,11 @@ export default async function graphPage() {
             </span>
             <input
               className=" bg-slate-400 text-black"
-              id='firstName'
+              id="firstName"
               type="text"
-              name='firstName'
+              name="firstName"
               defaultValue={user.firstName}
               style={{ width: '100%' }}
-              
             />
           </label>
 
@@ -106,7 +102,7 @@ export default async function graphPage() {
               className=" bg-slate-200 hover:bg-slate-100 active:bg-white text-black focus:ring focus:ring-blue-500"
               type="text"
               name="email"
-              placeholder='1st part of email'
+              placeholder="1st part of email"
               style={{ width: '100%' }}
             />
           </label>
@@ -117,10 +113,7 @@ export default async function graphPage() {
             Search
           </button>
         </form>
-
       </div>
-
-     
     </main>
   );
 }

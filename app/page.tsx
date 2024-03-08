@@ -1,6 +1,6 @@
 
 import Topbar from './components/topbar';
-import getUserProfile from './userGraph/lib/getUserProfile';
+import getUserProfile from './lib/getUserProfile';
 import { User } from './interfaces/User';
 
 export default async function Home() {
