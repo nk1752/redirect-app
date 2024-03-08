@@ -7,10 +7,11 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies
-COPY package*.json ./
+COPY package.json ./
+COPY pnpm-lock.yaml ./
 
 # --omit=dev will skip devDependencies
-RUN npm ci 
+RUN pnpm
 
 # Rebuild the source code only when needed
 FROM base AS builder
